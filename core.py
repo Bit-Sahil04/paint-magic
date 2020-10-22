@@ -127,6 +127,7 @@ clock = pygame.time.Clock()
 dt = 0
 margin = 0
 padding = 0
+pygame.display.set_caption("text-magic @ Bit-Sahil04")
 
 grid = create_grid(screen, margin, padding, tile_size)
 print(len(grid), len(grid[0]), len(grid) * len(grid[0]))
