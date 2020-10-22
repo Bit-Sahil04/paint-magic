@@ -141,14 +141,7 @@ string_images = []
 frames = 0
 
 selected_color = 0
-colors = [
-    (255, 0, 0),     # red
-    (0, 255, 0),     # green
-    (0, 0, 255),     # blue
-    (170, 0, 210),   # magenta
-    (0, 130, 200),   # cyan
-    (255, 128, 128)  # pale_red
-]
+
 while True:
     screen.fill((0, 0, 0))
     for e in pygame.event.get():

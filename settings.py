@@ -11,3 +11,12 @@ res = (800, 600)         # window size
 tile_size = 8            # size of each tile, as well as the size of grid if enabled
 lerp_speed = 0.05         # How fast should pieces assemble together. 0.01 = 1% of the distance covered per frame
 output_name = "out2"      # Name of the GIF generated if saving_enabled = True. (Do not include file extension!)
+
+colors = [              # Edit these values to change or add more colors
+    (255, 0, 0),        # red
+    (0, 255, 0),        # green
+    (0, 0, 255),        # blue
+    (170, 0, 210),      # magenta
+    (0, 130, 200),      # cyan
+    (255, 128, 128)     # pale_red
+]
