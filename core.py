@@ -194,7 +194,9 @@ while True:
 
         if silhouette:
             for tile in drawn_cells:
-                pygame.draw.rect(screen, (127, 127, 255), tile.rect, 1)
+                tmp = tileset[tile.color_id].copy()
+                tmp.set_alpha(50)
+                screen.blit(tmp, tile.coord)
 
         if saving_enabled:
             FPS = 30

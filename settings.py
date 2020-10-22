@@ -8,7 +8,7 @@ duration = 8             # Pillow says this is duration of each frame in millise
 
 display_stats = True     # Display stats like pixels drawn, fps
 display_grid = False     # displays a grid of tilesize x tilesize
-silhouette = False       # Shows original position while animating (can get laggy)
+silhouette = True       # Shows original position while animating
 brush_size = 3           # Default size of the brush
 
 res = (800, 600)         # window size
