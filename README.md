@@ -13,7 +13,7 @@ A painting tool that generates inverse "snapped" effect using linear interpolati
 `Right Mouse Button`        : Erase pixels <br>
 `Right and Left arrow keys` : change colors <br>
 `Up and Down arrow keys`    : change brush size <br> 
-`Spacebar`                  : Play or repeat the animation. (Animation wont stop until it's completed)
+`Spacebar`                  : Play or repeat the animation. 
 
 ## Features:
  * Highly configurable
