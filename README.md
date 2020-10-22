@@ -9,6 +9,8 @@ A painting tool that generates inverse "snapped" effect using linear interpolati
   * `Pillow 8.x` or higher. (Not necessary, but required to save the animation as a GIF)
 
 ## How to use:
+`Left Mouse Button`         : Paint pixels <br>
+`Right Mouse Button`        : Erase pixels <br>
 `Right and Left arrow keys` : change colors <br>
 `Up and Down arrow keys`    : change brush size <br> 
 `Spacebar`                  : Play or repeat the animation. (Animation wont stop until it's completed)
