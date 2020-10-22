@@ -1,7 +1,7 @@
 # paint-magic
 A painting tool that generates inverse "snapped" effect using linear interpolation.
 
-![sample](https://i.imgur.com/EaDQwRt.gif)
+![sample](https://i.imgur.com/vr2pmTU.gif)
 
 ## Requirements
   * `Python 3.6.x` or higher
