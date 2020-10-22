@@ -17,7 +17,8 @@ class Tile:
         self.coord = (self.x, self.y)
         self.size = size - pad
         self.rect = pygame.rect.Rect(self.x, self.y, self.size, self.size)
-        self.color = (255, 0, 0)
+        self.color_id = 0
+        self.isDrawn = False
 
 
 def light_tts(text: str, x, y, surf, size=10, color=(255, 255, 255)) -> pygame.Rect:
@@ -89,7 +90,7 @@ def scramble(drawn):
     for x in range(len(drawn)):
         randx = random.randint(margin//2, max_width)
         randy = random.randint(margin//2, max_height)
-        scrambled.append([(randx, randy), drawn[x].rect.center, drawn[x].color])
+        scrambled.append([(randx, randy), drawn[x].rect.center, drawn[x].color_id])
 
     return scrambled
 
@@ -112,6 +113,16 @@ def get_lerped_cells(scrambled):
     return lerped
 
 
+def get_tilesets():
+    tileset = []
+    for i in range(len(colors)):
+        surf = pygame.Surface((tile_size, tile_size))
+        surf.fill(colors[i])
+        tileset.append(surf)
+
+    return tileset
+
+
 def reset():
     global drawing_phase, scrambled_phase, scrambled_cells, finished
     drawing_phase = not drawing_phase
@@ -127,6 +138,7 @@ clock = pygame.time.Clock()
 dt = 0
 margin = 0
 padding = 0
+pygame.display.set_caption("text-magic @ Bit-Sahil04")
 
 grid = create_grid(screen, margin, padding, tile_size)
 print(len(grid), len(grid[0]), len(grid) * len(grid[0]))
@@ -139,11 +151,12 @@ drawing_phase = True
 scrambled_phase = False
 string_images = []
 frames = 0
+tileset = get_tilesets()    # This is a surface the size of each tile for each color, as blitting is faster than drawing
 
 selected_color = 0
 
 while True:
-    screen.fill((0, 0, 0))
+    screen.fill(default_background_color)
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             pygame.quit()
@@ -157,7 +170,7 @@ while True:
                 brush_size -= (1 < brush_size)
 
             if e.key == pygame.K_LEFT:
-                selected_color = (selected_color + 1) % len(colors)
+                selected_color = (selected_color - 1) % len(colors)
             if e.key == pygame.K_RIGHT:
                 selected_color = (selected_color + 1) % len(colors)
 
@@ -174,12 +187,10 @@ while True:
         scrambled_cells = get_lerped_cells(scrambled_cells)
 
         for i in range(len(scrambled_cells)):
-            tile = pygame.rect.Rect(scrambled_cells[i][0][0], scrambled_cells[i][0][1], tile_size, tile_size)
-            pygame.draw.rect(screen, scrambled_cells[i][2], tile)
+            screen.blit(tileset[scrambled_cells[i][2]], (scrambled_cells[i][0], scrambled_cells[i][1]))
 
         for i in range(len(finished)):
-            tile = pygame.rect.Rect(finished[i][0], finished[i][1], tile_size, tile_size)
-            pygame.draw.rect(screen, finished[i][2], tile)
+            screen.blit(tileset[finished[i][2]], (finished[i][0], finished[i][1]))
 
         if silhouette:
             for tile in drawn_cells:
@@ -206,9 +217,10 @@ while True:
         if pygame.mouse.get_pressed()[0]:
             tiles = get_tiles(grid, tilex, tiley, brush_size)
             for tile in tiles:
-                tile.color = colors[selected_color]
+                tile.color_id = selected_color
                 if tile not in drawn_cells:
                     drawn_cells.append(tile)
+
         if pygame.mouse.get_pressed()[2]:
             tiles = get_tiles(grid, tilex, tiley, brush_size)
             for tile in tiles:
@@ -216,7 +228,7 @@ while True:
                     drawn_cells.remove(tile)
 
         for tile in drawn_cells:
-            pygame.draw.rect(screen, tile.color, tile.rect)
+            screen.blit(tileset[tile.color_id], tile.coord)
 
         pygame.draw.rect(screen, (255, 127, 127), mrect, 1)
 
