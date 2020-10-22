@@ -17,4 +17,4 @@ A painting tool that generates inverse "snapped" effect using linear interpolati
 
 ## Features:
  * Highly configurable
- * Can output the animation as a .GIF with various level of smoothness using ``optimization-level`` parameter
+ * Can output the animation as a .GIF with various level of smoothness using ``optimization-level`` parameter (WIP)
