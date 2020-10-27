@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import math
 from settings import *
 
 try:
@@ -47,13 +48,19 @@ def draw_grid(lines, surf):
     for line in lines:
         pygame.draw.line(tempsurf, (127, 127, 127, 68), line[0], line[1])
 
-    surf.blit(tempsurf, (0, 0))
+    return tempsurf
 
 
 def lerp(v1, v2, t):
     dx = (1 - t)*v1[0] + t*v2[0]
     dy = (1 - t)*v1[1] + t*v2[1]
     return dx, dy
+
+
+def cos_lerp(y1, y2, mu):
+    angle = mu * math.pi
+    mu2 = (1.0 - math.cos(angle)) * 0.5  # get new x-value based on cosine function
+    return lerp(y1, y2, mu2)
 
 
 def create_frame(surf, size):
@@ -104,7 +111,7 @@ def get_lerped_cells(scrambled):
         currentx, currenty = current
         targetx, targety = target
         if (targetx - 1 > currentx or targetx + 1 < currentx) and (targety - 1 > currenty or targety + 1 < currenty):
-            dx, dy = lerp(current, target, lerp_speed)
+            dx, dy = cos_lerp(current, target, lerp_speed)
             lerped.append([(dx, dy), target, i[2]])
         else:
             dx, dy = target
@@ -154,6 +161,7 @@ frames = 0
 tileset = get_tilesets()    # This is a surface the size of each tile for each color, as blitting is faster than drawing
 
 selected_color = 0
+linegrid = draw_grid(lines, screen)
 
 while True:
     screen.fill(default_background_color)
@@ -175,7 +183,7 @@ while True:
                 selected_color = (selected_color + 1) % len(colors)
 
     if display_grid:
-        draw_grid(lines, screen)
+        screen.blit(linegrid, (0, 0))
 
     mx, my = pygame.mouse.get_pos()
     tilex = ((mx - margin//2) // tile_size) % (len(grid[0]))
