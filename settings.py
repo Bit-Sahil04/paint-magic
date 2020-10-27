@@ -25,4 +25,7 @@ colors = [              # Edit these values to change or add more colors
     (255, 128, 128),    # pale_red
     (255, 255, 255),    # White
 ]
-default_background_color = (30, 30, 30)   # Default canvas background color
+
+default_background_color = (80, 80, 80)   # Default canvas background color
+palette_width = 50     #palette width
+

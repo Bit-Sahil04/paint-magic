@@ -138,6 +138,14 @@ def reset():
     finished = []
 
 
+def drawColorPalette():
+    for i in range(len(colors)):
+        rect=pygame.rect.Rect(i*50,0,50,50)
+        pygame.draw.rect(screen,colors[i], rect)
+        if i==selected_color:
+            pygame.draw.rect(screen,(0,0,0), rect,5)
+
+       
 pygame.init()
 screen = pygame.display.set_mode(res)
 FPS = 60
@@ -240,14 +248,15 @@ while True:
         for tile in drawn_cells:
             screen.blit(tileset[tile.color_id], tile.coord)
 
-        pygame.draw.rect(screen, (255, 127, 127), mrect, 1)
+        pygame.draw.rect(screen,colors[selected_color], mrect, 1)
 
     if display_stats:
-        light_tts(f"{clock.get_fps():.2f} // {dt}", res[0] // 1.1, res[1] // 70, screen, size=20, color=colors[selected_color])
-        light_tts(f"Pixels Drawn: {len(drawn_cells)} ", res[0] // 1.12, res[1] // 20, screen, size=20, color=colors[selected_color])
-        light_tts(f"Brush size: {brush_size}", res[0] // 1.1, res[1] // 10, screen, size=20, color=colors[selected_color])
+        light_tts(f"{clock.get_fps():.2f} // {dt}", res[0] // 1.1, res[1] // 70, screen, size=20, color=(255,255,255))
+        light_tts(f"Pixels Drawn: {len(drawn_cells)} ", res[0] // 1.12, res[1] // 20, screen, size=20, color=(255,255,255))
+        light_tts(f"Brush size: {brush_size}", res[0] // 1.1, res[1] // 10, screen, size=20, color=(255,255,255))
         pygame.draw.line(screen, (127, 255, 127), (0, res[1]-10), (lerp((0, res[1]-10), (res[0], res[1] - 10), len(finished)/(len(drawn_cells) + 1))), 3)
 
+    drawColorPalette()
     dt = clock.tick(FPS)
     timer = pygame.time.get_ticks() // 1000
     frames += 1
